@@ -1,19 +1,72 @@
-# Container Security Paper
+# Container Security Framework
 
-## How to run:
+A comprehensive framework for monitoring and securing container deployments.
 
-### Install Dependencies
-Ensure you have the necessary dependencies installed. Use the `requirements.txt` file to set up your environment:
+## Overview
+
+This framework provides tools and configurations for container security scanning, policy enforcement, and posture management.
+
+## Prerequisites
+
+- Python 3.x
+- Docker
+- pip (Python package manager)
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-repo/container-security.git
+cd container-security
 ```
+
+2. Install required dependencies:
+```bash
 pip install -r requirements.txt
 ```
 
-The entry point to the application is the server.py file. you can run it using "python3 server.py" command.
+## Project Structure
 
-The Application runs in the 5050 port by default.
+```
+container-security/
+├── server.py
+├── scan_docker_image.py
+├── requirements.txt
+└── configuration/
+    ├── policy/
+    └── posture/
+```
 
-All the framework configurations related to policy,posture,etc can be setup using the files in the configuration folder.
+## Usage
 
-The scan_docker_image.py file is the continuos monitoring module of the container framework and it scans the docker image periodically.You can run the script using the "python3 scan_docker_image.py" command.
+### Main Application Server
+
+The main application server handles the core functionality of the framework.
+
+1. Start the server:
+```bash
+python3 server.py
+```
+
+2. Access the application:
+- Default port: 5050
+- URL: `http://localhost:5050`
+
+### Container Image Scanner
+
+The framework includes a continuous monitoring module for scanning Docker images.
+
+1. Run the scanner:
+```bash
+python3 scan_docker_image.py
+```
+
+## Configuration
+
+All framework configurations can be customized using the files in the `configuration` directory:
+
+- `configuration/policy/`: Security policy definitions
+- `configuration/posture/`: Security posture settings
+
 
 
