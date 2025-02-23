@@ -1,0 +1,10 @@
+{
+    "resource_id": "A",
+    "resource_name": "Sample Resource A",
+    "description": "This is a mock resource for testing access control in the ZTFramework.",
+    "data": {
+      "field1": "value1",
+      "field2": "value2"
+    }
+  }
+  

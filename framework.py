@@ -1,8 +1,10 @@
+from flask import jsonify
 from audit import AuditLogger
 from auth import AuthenticationAuthorization
 from policy_manager import PolicyManager
 from session_management import SessionManager
 from posture_manager import PostureManager
+import json
 
 class ZTFramework:
     def __init__(self):
@@ -23,44 +25,53 @@ class ZTFramework:
         try:
             # Validate request (e.g., HTTPS)
             if not request.get('is_secure', False):
-                self.audit_logger.log_event("ZTCF Check -1: Check for Secure connection: Failure (HTTPS connection is mandatory, switch to HTTPS connection and try again)")
-                raise ValueError("Secure connection check failed")
+                self.audit_logger.log_event("ZTCF Check -1: Check for Secure connection: Failed (Non-HTTPS connection detected)")
+                raise ValueError("Access denied: A secure HTTPS connection is required. Please switch to HTTPS and try again.")
 
             self.audit_logger.log_event("ZTCF Check -1: Check for Secure connection: Success")
 
             # Authenticate user
             if not self.auth_manager.authenticate(username, password):
                 self.audit_logger.log_event("ZTCF Check -2: Check for Valid credentials: Failed")
-                raise ValueError("Authentication failed: invalid credentials")
+                raise ValueError("Access denied: Invalid credentials. Please check your username and password and try again.")
 
             self.audit_logger.log_event("ZTCF Check -2: Check for Valid credentials: Success")
 
             # Validate device posture
             if not self.posture_manager.check_posture(username):
                 self.audit_logger.log_event("ZTCF Check -3: Check for Valid posture: Failed")
-                raise ValueError("Posture validation failed")
+                raise ValueError("Access denied: Device posture validation failed. Please ensure your device meets security requirements.")
 
             self.audit_logger.log_event("ZTCF Check -3: Check for Valid posture: Success")
 
             # Enforce policy
             if not self.session_manager.enforce_policy(session_id, self.policy_manager, resource):
                 self.audit_logger.log_event("ZTCF Check -4: Check for Valid policy: Failed")
-                raise ValueError("Policy enforcement failed")
+                raise ValueError("Access denied: You do not have permission to access this resource according to enforced policy.")
 
             self.audit_logger.log_event("ZTCF Check -4: Check for Valid policy: Success")
-            self.audit_logger.log_event(f"ZTCF: Access Granted for User \"{username}\"")
+            self.audit_logger.log_event(f"ZTCF: Access granted for User \"{username}\"")
+
+            # Load and return the mock resource
+            with open('resource.json', 'r') as file:
+                resource_data = json.load(file)
 
             # Log response sent
             self.audit_logger.log_event("ZTCF: Response sent to the user.")
-            
+                        
             # Trigger continuous monitoring
             self.audit_logger.log_event("ZTCF: Continuous monitoring triggered")
 
-            return "Access granted to resource.", 200
+            # Return the resource data directly (as a dictionary)
+            return resource_data, 200
+
 
         except ValueError as e:
             # Delete the session if any check fails
             self.session_manager.delete_session(session_id)
             self.audit_logger.log_event(f"ZTCF: Session {session_id} deleted due to failure")
             self.audit_logger.log_event(f"ZTCF: {str(e)} response sent to the user.")
-            return str(e), 403
+            
+            # Return a proper JSON response
+            return {"error": str(e)}, 403
+

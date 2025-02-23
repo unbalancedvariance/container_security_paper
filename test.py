@@ -56,4 +56,4 @@ for i, mock in enumerate(mock_requests):
     
     print(f"Test Case {i + 1}:")
     response, status_code = framework.request_access(request_context, username, password, resource, ip_address)
-    print(f"Response: {response}, Status Code: {status_code}\n")
+    print(f"Response: {response}, Status Code: {status_code}\n")  
