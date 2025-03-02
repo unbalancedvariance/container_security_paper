@@ -43,14 +43,24 @@ container-security/
 
 The main application server handles the core functionality of the framework.
 
-1. Start the server:
-```bash
-python3 server.py
+## **1. Build the Docker Image**
+Run the following command to build the Docker image:
+```sh
+docker build -t flask-zt-server .
+
+## **2. Run the Container with Environment Variables**
+To run the container and pass an environment variable (`TEST_SCENARIO`), use:
+```sh
+docker run -d -e TEST_SCENARIO=all_pass -p 5050:5050 --name flask-zt-server flask-zt-server
 ```
+- `-d` → Runs in detached mode (background)
+- `-e TEST_SCENARIO=all_pass` → Passes the environment variable
+- `-p 5050:5050` → Maps container port 5050 to host port 5050
+- `--name flask-zt-server` → Names the container
 
 2. Access the application:
 - Default port: 5050
-- URL: `http://localhost:5050`
+- URL: `https://localhost:5050/get_resource`
 
 ### Container Image Scanner
 
