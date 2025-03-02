@@ -51,10 +51,10 @@ docker build -t flask-zt-server .
 ## **2. Run the Container with Environment Variables**
 To run the container and pass an environment variable (`TEST_SCENARIO`), use:
 ```sh
-docker run -d -e TEST_SCENARIO=all_pass -p 5050:5050 --name flask-zt-server flask-zt-server
+docker run -d -e TEST_SCENARIO={scenario_name} -p 5050:5050 --name flask-zt-server flask-zt-server
 ```
 - `-d` → Runs in detached mode (background)
-- `-e TEST_SCENARIO=all_pass` → Passes the environment variable
+- `-e TEST_SCENARIO={scenario_name}` → Passes the environment variable of scenario[ex: "all_pass","http_fail","auth_fail","posture_fail","policy_fail",etc].
 - `-p 5050:5050` → Maps container port 5050 to host port 5050
 - `--name flask-zt-server` → Names the container
 
