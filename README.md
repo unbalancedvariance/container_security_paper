@@ -61,7 +61,12 @@ docker run -d -e TEST_SCENARIO=all_pass -p 5050:5050 --name flask-zt-server flas
 2. Access the application:
 - Default port: 5050
 - URL: `https://localhost:5050/get_resource`
+  
+If you're running locally, pass the scenario as a command-line argument:
+```
+python server.py --scenario {scenario_name}
 
+```
 ### Container Image Scanner
 
 The framework includes a continuous monitoring module for scanning Docker images.
