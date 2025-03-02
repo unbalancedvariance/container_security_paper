@@ -57,16 +57,17 @@ docker run -d -e TEST_SCENARIO={scenario_name} -p 5050:5050 --name flask-zt-serv
 - `-e TEST_SCENARIO={scenario_name}` → Passes the environment variable of scenario[ex: "all_pass","http_fail","auth_fail","posture_fail","policy_fail",etc].
 - `-p 5050:5050` → Maps container port 5050 to host port 5050
 - `--name flask-zt-server` → Names the container
+- 
+If you're running locally, pass the scenario as a command-line argument:
+```
+python3 server.py --scenario {scenario_name}
+
+```
 
 2. Access the application:
 - Default port: 5050
 - URL: `https://localhost:5050/get_resource`
   
-If you're running locally, pass the scenario as a command-line argument:
-```
-python server.py --scenario {scenario_name}
-
-```
 ### Container Image Scanner
 
 The framework includes a continuous monitoring module for scanning Docker images.
