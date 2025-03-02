@@ -47,7 +47,7 @@ The main application server handles the core functionality of the framework.
 Run the following command to build the Docker image:
 ```sh
 docker build -t flask-zt-server .
-
+```
 ## **2. Run the Container with Environment Variables**
 To run the container and pass an environment variable (`TEST_SCENARIO`), use:
 ```sh
