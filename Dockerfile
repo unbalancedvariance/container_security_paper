@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Install dependencies (including cryptography)
-RUN pip install flask cryptography
+RUN pip install flask cryptography requests urllib3
 
 # Expose port
 EXPOSE 5050
