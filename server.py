@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, jsonify
 import argparse
+import random
 from framework import ZTFramework
 
 app = Flask(__name__)
@@ -24,7 +25,9 @@ parser.add_argument("--scenario", choices=TEST_SCENARIOS.keys(), help="Select a 
 args, unknown = parser.parse_known_args()
 
 # Get scenario from CLI arg (if provided) or from ENV variable (fallback)
-scenario = args.scenario or os.environ.get("TEST_SCENARIO", "all_pass")  # Default: "all_pass"
+# scenario = args.scenario or os.environ.get("TEST_SCENARIO", "all_pass")  # Default: "all_pass"
+scenario = random.choice(list(TEST_SCENARIOS.keys()))
+
 
 if scenario not in TEST_SCENARIOS:
     raise ValueError(f"Invalid scenario: {scenario}. Choose from {list(TEST_SCENARIOS.keys())}")
